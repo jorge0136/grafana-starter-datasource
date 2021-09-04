@@ -1,12 +1,10 @@
 import defaults from 'lodash/defaults';
 
 import React, { ChangeEvent, PureComponent } from 'react';
-import { LegacyForms } from '@grafana/ui';
+import { InlineField, InlineFieldRow, Input } from '@grafana/ui';
 import { QueryEditorProps } from '@grafana/data';
 import { DataSource } from './datasource';
 import { defaultQuery, MyDataSourceOptions, MyQuery } from './types';
-
-const { FormField } = LegacyForms;
 
 type Props = QueryEditorProps<DataSource, MyQuery, MyDataSourceOptions>;
 
@@ -28,22 +26,26 @@ export class QueryEditor extends PureComponent<Props> {
     const { queryText, constant } = query;
 
     return (
-      <div className="gf-form">
-        <FormField
-          width={4}
-          value={constant}
-          onChange={this.onConstantChange}
-          label="Constant"
-          type="number"
-          step="0.1"
-        />
-        <FormField
-          labelWidth={8}
-          value={queryText || ''}
-          onChange={this.onQueryTextChange}
-          label="Query Text"
-          tooltip="Not used yet"
-        />
+      <div>
+        <InlineFieldRow>
+          <InlineField label="Constant" labelWidth="auto">
+            <Input
+              css=""
+              onChange={this.onConstantChange}
+              step="0.1"
+              type="number"
+              value={constant}
+              width={8}
+            />
+          </InlineField>
+          <InlineField label="Query Text" labelWidth="auto">
+            <Input
+              css=""
+              onChange={this.onQueryTextChange}
+              value={queryText || ''}
+            />
+          </InlineField>
+        </InlineFieldRow>
       </div>
     );
   }
